@@ -188,5 +188,5 @@ Use Postman, cURL, or Thunder Client:
 
 ## Author
 
-- Motarjim App project (Mini Project 2)
+- sspikes
 
