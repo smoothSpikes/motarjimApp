@@ -1,21 +1,38 @@
 package com.example.motarjimapp.resource;
 
 import com.example.motarjimapp.model.TranslationRequest;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import com.example.motarjimapp.service.LLMService;
+import jakarta.ws.rs.core.Response;
+import jakarta.annotation.security.RolesAllowed;
+
 
 
 @Path("/translate")
 public class TranslatorResource {
 
+    @Inject
+    LLMService service;
+
+
     @Consumes("application/json")
-    @Produces("text/plain")
+    @Produces("application/json")
+    @RolesAllowed("USER")
     @POST
-    public String getTranslation(TranslationRequest request) {
+    public Response getTranslation(TranslationRequest request) {
 
-        LLMService service = new LLMService();
+        if (request == null || request.getText() == null || request.getText().isBlank()) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Text cannot be empty")
+                    .build();
+        }
 
-        return service.translate(request.getText());
+        String translated = service.translate(request.getText());
+
+
+        return Response.ok(translated).build();
+
     }
 }
 

@@ -1,0 +1,25 @@
+@startuml
+title Translation Flow (Chrome Extension -> REST API -> LLM)
+
+actor User
+participant "Chrome Extension\n(Popup)" as Ext
+participant "TranslatorResource" as API
+participant "InMemoryIdentityStore" as Auth
+participant "LLMService" as Service
+participant "LLM Provider\n(Gemini/Other)" as LLM
+
+User -> Ext : Open popup / click Translate
+Ext -> Ext : Read selected text
+Ext -> API : POST /api/translate\nAuthorization: Basic ...\n{text}
+
+API -> Auth : Validate credentials
+Auth --> API : VALID (role USER)
+
+API -> Service : translate(text)
+Service -> LLM : HTTP request with prompt
+LLM --> Service : translated text
+Service --> API : translated text
+API --> Ext : 200 OK + translation
+Ext --> User : Display result in popup
+
+@enduml

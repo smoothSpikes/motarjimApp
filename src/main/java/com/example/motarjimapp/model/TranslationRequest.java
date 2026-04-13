@@ -3,6 +3,9 @@ package com.example.motarjimapp.model;
 public class TranslationRequest {
     private String text;
 
+    public TranslationRequest() {
+    }
+
     public TranslationRequest(String text){
         this.text = text;
     }

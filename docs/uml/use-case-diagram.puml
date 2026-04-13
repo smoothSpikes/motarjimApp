@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "End User" as User
+actor "Student Developer" as Dev
+
+rectangle "Motarjim System" {
+  usecase "Select Text\nin Browser" as UC1
+  usecase "Translate Text\nvia Extension" as UC2
+  usecase "Authenticate\n(Basic Auth)" as UC3
+  usecase "Call Translator\nREST Endpoint" as UC4
+  usecase "Receive Darija\nTranslation" as UC5
+  usecase "Test API with\nPostman/cURL" as UC6
+}
+
+User --> UC1
+User --> UC2
+UC2 --> UC3 : <<include>>
+UC2 --> UC4 : <<include>>
+UC4 --> UC5 : <<include>>
+Dev --> UC6
+
+@enduml

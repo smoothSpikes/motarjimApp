@@ -19,6 +19,19 @@
 
     <dependencies>
 
+        <!-- Source: https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.security.enterprise</groupId>
+            <artifactId>jakarta.security.enterprise-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
         <!-- Jakarta EE (includes REST, JSON, etc.) -->
         <dependency>
             <groupId>jakarta.platform</groupId>

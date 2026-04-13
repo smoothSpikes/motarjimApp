@@ -1,0 +1,49 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package "com.example.motarjimapp.config" {
+  class ApplicationConfig {
+  }
+
+  class CorsFilter {
+    +filter(requestContext)
+    +filter(requestContext, responseContext)
+  }
+}
+
+package "com.example.motarjimapp.resource" {
+  class TranslatorResource {
+    -service: LLMService
+    +getTranslation(request: TranslationRequest): Response
+  }
+}
+
+package "com.example.motarjimapp.model" {
+  class TranslationRequest {
+    -text: String
+    +TranslationRequest()
+    +TranslationRequest(text: String)
+    +getText(): String
+    +setText(text: String): void
+  }
+}
+
+package "com.example.motarjimapp.service" {
+  class LLMService {
+    +translate(text: String): String
+  }
+}
+
+package "com.example.motarjimapp.security" {
+  class InMemoryIdentityStore {
+    +validate(credential: Credential): CredentialValidationResult
+  }
+}
+
+TranslatorResource --> LLMService : uses
+TranslatorResource --> TranslationRequest : consumes
+InMemoryIdentityStore ..> TranslatorResource : secures access
+ApplicationConfig ..> TranslatorResource : registers JAX-RS app
+CorsFilter ..> TranslatorResource : cross-origin support
+
+@enduml

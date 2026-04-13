@@ -1,0 +1,22 @@
+@startuml
+title Deployment Diagram - Motarjim App
+
+node "Client Device" as client {
+  artifact "Chrome Extension\n(Manifest V3 Popup)"
+  artifact "Python Client"
+  artifact "PHP Client"
+  artifact "React Native App"
+}
+
+node "Application Server\n(localhost:8080)" as server {
+  artifact "Jakarta REST WAR\nmotarjimApp"
+}
+
+cloud "LLM Provider API\n(Gemini or free model)" as llm
+
+client --> server : HTTPS/HTTP REST\nPOST /api/translate\nBasic Auth
+server --> llm : HTTPS API call\n(prompt + text)
+llm --> server : translated result
+server --> client : translated text response
+
+@enduml
